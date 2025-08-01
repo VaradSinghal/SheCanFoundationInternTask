@@ -10,7 +10,8 @@ class LeaderboardPage extends StatefulWidget {
   State<LeaderboardPage> createState() => _LeaderboardPageState();
 }
 
-class _LeaderboardPageState extends State<LeaderboardPage> with SingleTickerProviderStateMixin {
+class _LeaderboardPageState extends State<LeaderboardPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
 
@@ -21,9 +22,10 @@ class _LeaderboardPageState extends State<LeaderboardPage> with SingleTickerProv
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
     _controller.forward();
   }
 
@@ -63,7 +65,29 @@ class _LeaderboardPageState extends State<LeaderboardPage> with SingleTickerProv
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),
-                          title: Text(entry.name),
+                          title: Row(
+                            children: [
+                              Text(entry.name),
+                              const SizedBox(width: 8),
+                              Row(
+                                children: entry.badges
+                                    .where((badge) => badge.unlocked)
+                                    .map(
+                                      (badge) => Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 4.0,
+                                        ),
+                                        child: Icon(
+                                          badge.icon,
+                                          color: badge.color,
+                                          size: 16,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ],
+                          ),
                           trailing: Text('₹${entry.score.toStringAsFixed(0)}'),
                         ),
                       );
