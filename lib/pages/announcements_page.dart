@@ -21,7 +21,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage>
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
   late Animation<Offset> _slideAnimation;
-  int _selectedIndex = 2; // Announcements is index 2 in bottom nav
+  int _selectedIndex = 2;
   final Map<int, bool> _expandedStates = {};
 
   @override
@@ -65,19 +65,54 @@ class _AnnouncementsPageState extends State<AnnouncementsPage>
     });
     switch (index) {
       case 0:
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const DashboardPage()),
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const DashboardPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
+                  var tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
+          ),
         );
         break;
       case 1:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const LeaderboardPage()),
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const LeaderboardPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
+                  var tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
+          ),
         );
         break;
       case 2:
-        // Already on Announcements
         break;
       case 3:
         Navigator.push(
@@ -113,13 +148,13 @@ class _AnnouncementsPageState extends State<AnnouncementsPage>
 
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
-        // Safely handle null or empty announcements
         if (state.announcements == null || state.announcements.isEmpty) {
           return Scaffold(
             backgroundColor: const Color(0xFFF8FAFC),
             appBar: AppBar(
               backgroundColor: const Color(0xFF006064),
               elevation: 0,
+              automaticallyImplyLeading: false,
               title: Text(
                 'Announcements',
                 style: GoogleFonts.poppins(
@@ -128,11 +163,8 @@ class _AnnouncementsPageState extends State<AnnouncementsPage>
                   color: Colors.white,
                 ),
               ),
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.pop(context),
-              ),
             ),
+
             body: Center(
               child: ScaleTransition(
                 scale: _scaleAnimation,
@@ -150,10 +182,9 @@ class _AnnouncementsPageState extends State<AnnouncementsPage>
           );
         }
 
-        // Map state.announcements to Announcement objects
         final announcements = state.announcements.asMap().entries.map((entry) {
           final index = entry.key;
-          final content = entry.value.toString(); // Ensure content is string
+          final content = entry.value.toString();
           return Announcement(
             title: [
               'New Campaign Launched!',
@@ -213,7 +244,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage>
                       });
                     },
                     child: Container(
-                      width: double.infinity, // Constrained by ListView
+                      width: double.infinity,
                       margin: EdgeInsets.symmetric(
                         vertical: screenHeight * 0.01,
                       ),

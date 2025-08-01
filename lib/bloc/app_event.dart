@@ -9,3 +9,4 @@ class AddDonation extends AppEvent {
 
   AddDonation(this.amount);
 }
+class Logout extends AppEvent {}

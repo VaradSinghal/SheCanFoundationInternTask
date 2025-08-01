@@ -10,7 +10,8 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
@@ -24,14 +25,24 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       duration: const Duration(milliseconds: 1200),
     );
     _scaleAnimation = Tween<double>(begin: 0.85, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.0, 0.6, curve: Curves.easeOutBack)),
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeOutBack),
+      ),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.2, 0.8, curve: Curves.easeIn)),
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.2, 0.8, curve: Curves.easeIn),
+      ),
     );
-    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.4, 1.0, curve: Curves.easeOut)),
-    );
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.4, 1.0, curve: Curves.easeOut),
+          ),
+        );
     _controller.forward();
   }
 
@@ -70,24 +81,37 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      labelStyle: GoogleFonts.poppins(color: const Color(0xFF64748B)),
-                      prefixIcon: const Icon(Icons.email, color: Color(0xFF006064)),
+                      labelStyle: GoogleFonts.poppins(
+                        color: const Color(0xFF64748B),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        color: Color(0xFF006064),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
                       fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18,
+                        horizontal: 20,
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
-                        borderSide: const BorderSide(color: Color(0xFF006064), width: 2),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF006064),
+                          width: 2,
+                        ),
                       ),
-                      floatingLabelStyle: GoogleFonts.poppins(color: const Color(0xFF006064)),
+                      floatingLabelStyle: GoogleFonts.poppins(
+                        color: const Color(0xFF006064),
+                      ),
                     ),
                     style: GoogleFonts.poppins(color: const Color(0xFF1E293B)),
                   ),
@@ -101,24 +125,37 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      labelStyle: GoogleFonts.poppins(color: const Color(0xFF64748B)),
-                      prefixIcon: const Icon(Icons.lock, color: Color(0xFF006064)),
+                      labelStyle: GoogleFonts.poppins(
+                        color: const Color(0xFF64748B),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xFF006064),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
                       fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18,
+                        horizontal: 20,
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
-                        borderSide: const BorderSide(color: Color(0xFF006064), width: 2),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF006064),
+                          width: 2,
+                        ),
                       ),
-                      floatingLabelStyle: GoogleFonts.poppins(color: const Color(0xFF006064)),
+                      floatingLabelStyle: GoogleFonts.poppins(
+                        color: const Color(0xFF006064),
+                      ),
                     ),
                     obscureText: true,
                     style: GoogleFonts.poppins(color: const Color(0xFF1E293B)),
@@ -135,21 +172,24 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              const DashboardPage(),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const DashboardPage(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(1.0, 0.0);
-                            const end = Offset.zero;
-                            const curve = Curves.easeInOut;
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
+                                const begin = Offset(1.0, 0.0);
+                                const end = Offset.zero;
+                                const curve = Curves.easeInOut;
+                                var tween = Tween(
+                                  begin: begin,
+                                  end: end,
+                                ).chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                );
+                              },
                         ),
                       );
                     },
@@ -184,21 +224,24 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              const SignUpPage(),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const SignUpPage(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(1.0, 0.0);
-                            const end = Offset.zero;
-                            const curve = Curves.easeInOut;
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
+                                const begin = Offset(1.0, 0.0);
+                                const end = Offset.zero;
+                                const curve = Curves.easeInOut;
+                                var tween = Tween(
+                                  begin: begin,
+                                  end: end,
+                                ).chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                );
+                              },
                         ),
                       );
                     },

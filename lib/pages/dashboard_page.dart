@@ -68,13 +68,50 @@ class _DashboardPageState extends State<DashboardPage>
       case 1:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const LeaderboardPage()),
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const LeaderboardPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
+                  var tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
+          ),
         );
+        
         break;
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const AnnouncementsPage()),
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const AnnouncementsPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
+                  var tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
+          ),
         );
         break;
       case 3:
@@ -118,6 +155,7 @@ class _DashboardPageState extends State<DashboardPage>
           appBar: AppBar(
             backgroundColor: const Color(0xFF006064),
             elevation: 0,
+            automaticallyImplyLeading: false,
             title: Text(
               'Dashboard',
               style: GoogleFonts.poppins(

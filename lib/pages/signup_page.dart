@@ -56,20 +56,19 @@ class _SignUpPageState extends State<SignUpPage>
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           'Sign Up',
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.w600,
             fontSize: 20,
             color: Colors.white,
+            
           ),
+          
         ),
         backgroundColor: const Color(0xFF006064),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
       body: SafeArea(
         child: Padding(
