@@ -168,57 +168,41 @@ final List<String> mockAnnouncements = [
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(AppState.initial()) {
-    on<LoadAppData>((event, emit) {
-      emit(
-        AppState(
-          user: mockUser,
-          leaderboard: mockLeaderboard,
-          announcements: mockAnnouncements,
-        ),
-      );
-    });
+    on<LoadAppData>(_onLoadAppData);
+    on<AddDonation>(_onAddDonation);
+    add(LoadAppData()); // Automatically load mock data
+  }
 
-    on<AddDonation>((event, emit) {
-      final currentUser = state.user;
-      final newTotal = currentUser.totalDonations + event.amount;
+  void _onLoadAppData(LoadAppData event, Emitter<AppState> emit) {
+    emit(
+      AppState(
+        user: mockUser,
+        leaderboard: mockLeaderboard,
+        announcements: mockAnnouncements,
+      ),
+    );
+  }
 
-      final updatedRewards = currentUser.rewards.map((reward) {
-        if (reward.title == 'Bronze Badge' && newTotal >= bronzeThreshold) {
-          return RewardModel(
-            title: reward.title,
-            icon: reward.icon,
-            unlocked: true,
-            color: reward.color,
-          );
-        } else if (reward.title == 'Silver Badge' &&
-            newTotal >= silverThreshold) {
-          return RewardModel(
-            title: reward.title,
-            icon: reward.icon,
-            unlocked: true,
-            color: reward.color,
-          );
-        } else if (reward.title == 'Gold Badge' && newTotal >= goldThreshold) {
-          return RewardModel(
-            title: reward.title,
-            icon: reward.icon,
-            unlocked: true,
-            color: reward.color,
-          );
-        }
-        return reward;
-      }).toList();
+  void _onAddDonation(AddDonation event, Emitter<AppState> emit) {
+    final currentUser = state.user;
+    final newTotal = currentUser.totalDonations + event.amount;
 
-      final updatedUser = UserModel(
-        name: currentUser.name,
-        referralCode: currentUser.referralCode,
-        totalDonations: newTotal,
-        rewards: updatedRewards,
-      );
+    final updatedRewards = currentUser.rewards.map((reward) {
+      if (reward.title == 'Bronze Badge' && newTotal >= bronzeThreshold) {
+        return reward.copyWith(unlocked: true);
+      } else if (reward.title == 'Silver Badge' && newTotal >= silverThreshold) {
+        return reward.copyWith(unlocked: true);
+      } else if (reward.title == 'Gold Badge' && newTotal >= goldThreshold) {
+        return reward.copyWith(unlocked: true);
+      }
+      return reward;
+    }).toList();
 
-      emit(state.copyWith(user: updatedUser));
-    });
+    final updatedUser = currentUser.copyWith(
+      totalDonations: newTotal,
+      rewards: updatedRewards,
+    );
 
-    add(LoadAppData());
+    emit(state.copyWith(user: updatedUser));
   }
 }

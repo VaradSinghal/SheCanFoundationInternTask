@@ -12,4 +12,17 @@ class RewardModel {
     required this.unlocked,
     required this.color,
   });
+  RewardModel copyWith({
+    String? title,
+    IconData? icon,
+    bool? unlocked,
+    Color? color,
+  }) {
+    return RewardModel(
+      title: title ?? this.title,
+      icon: icon ?? this.icon,
+      unlocked: unlocked ?? this.unlocked,
+      color: color ?? this.color,
+    );
+  }
 }

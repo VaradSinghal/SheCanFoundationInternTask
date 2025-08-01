@@ -12,4 +12,17 @@ class UserModel {
     required this.totalDonations,
     required this.rewards,
   });
+  UserModel copyWith({
+    String? name,
+    String? referralCode,
+    double? totalDonations,
+    List<RewardModel>? rewards,
+  }) {
+    return UserModel(
+      name: name ?? this.name,
+      referralCode: referralCode ?? this.referralCode,
+      totalDonations: totalDonations ?? this.totalDonations,
+      rewards: rewards ?? this.rewards,
+    );
+  }
 }
