@@ -4,6 +4,7 @@ import 'package:she_can_found_intern/bloc/app_state.dart';
 import 'package:she_can_found_intern/models/leaderboard_entry.dart';
 import 'package:she_can_found_intern/models/reward_model.dart';
 import 'package:she_can_found_intern/models/user_model.dart';
+import 'package:she_can_found_intern/pages/login_page.dart';
 
 part 'app_event.dart';
 
@@ -170,7 +171,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(AppState.initial()) {
     on<LoadAppData>(_onLoadAppData);
     on<AddDonation>(_onAddDonation);
-    add(LoadAppData()); // Automatically load mock data
+    on<Logout>(_onLogout);
+    add(LoadAppData());
   }
 
   void _onLoadAppData(LoadAppData event, Emitter<AppState> emit) {
@@ -183,6 +185,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
+  void _onLogout(Logout event, Emitter<AppState> emit) {}
+
   void _onAddDonation(AddDonation event, Emitter<AppState> emit) {
     final currentUser = state.user;
     final newTotal = currentUser.totalDonations + event.amount;
@@ -190,7 +194,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final updatedRewards = currentUser.rewards.map((reward) {
       if (reward.title == 'Bronze Badge' && newTotal >= bronzeThreshold) {
         return reward.copyWith(unlocked: true);
-      } else if (reward.title == 'Silver Badge' && newTotal >= silverThreshold) {
+      } else if (reward.title == 'Silver Badge' &&
+          newTotal >= silverThreshold) {
         return reward.copyWith(unlocked: true);
       } else if (reward.title == 'Gold Badge' && newTotal >= goldThreshold) {
         return reward.copyWith(unlocked: true);

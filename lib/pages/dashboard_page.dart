@@ -6,6 +6,7 @@ import 'package:she_can_found_intern/bloc/app_state.dart';
 import 'package:she_can_found_intern/pages/add_funds_page.dart';
 import 'package:she_can_found_intern/pages/announcements_page.dart';
 import 'package:she_can_found_intern/pages/leaderboard_page.dart';
+import 'package:she_can_found_intern/pages/login_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -88,7 +89,7 @@ class _DashboardPageState extends State<DashboardPage>
                 },
           ),
         );
-        
+
         break;
       case 2:
         Navigator.push(
@@ -172,15 +173,45 @@ class _DashboardPageState extends State<DashboardPage>
                 ),
                 onSelected: (value) {
                   if (value == 'logout') {
+                    context.read<AppBloc>().add(Logout());
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Logged out',
-                          style: GoogleFonts.poppins(),
+                          'Logging out...',
+                          style: GoogleFonts.poppins(
+                            fontSize: screenWidth * 0.04,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
                         ),
-                        backgroundColor: const Color(0xFF006064),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.05,
+                          vertical: screenHeight * 0.01,
+                        ),
+                        duration: const Duration(seconds: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: EdgeInsets.zero,
+                        clipBehavior: Clip.hardEdge,
+                        dismissDirection: DismissDirection.horizontal,
+                        showCloseIcon: true,
+                        closeIconColor: Colors.white,
                       ),
                     );
+                    Future.delayed(const Duration(seconds: 2), () {
+                      if (context.mounted) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      }
+                    });
                   }
                 },
                 itemBuilder: (context) => [
